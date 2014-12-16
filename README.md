@@ -1,6 +1,6 @@
 ## README
 
-[View slides on github.](https://scisoft.github.io/pf)
+[View slides on github.](https://scisoft.github.io/fp)
 
 ### How to build the slides
 
