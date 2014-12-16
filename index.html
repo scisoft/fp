@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <style type="text/css">
+      @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+      @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Droid Serif';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 3em; }
+      .remark-slide-content h2 { font-size: 2em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+
+  </head>
+  <body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="/fp/refreeze/js/springy.js"></script>
+    <script src="/fp/refreeze/js/springyui.js"></script>
+    <script>
+        
+    </script>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+
+---
+
+# Functional programming
+
+## Jonas Juselius &lt;jonas.juselius@uit.no&gt;
+
+HPC@UiT
+
+---
+
+layout: false
+
+## What is Functional Programming
+* Invented in the 30ies (Alonzo Church)
+* Not popularized due to limited computers
+* Functions are *first class*
+    * Data and functions are equivalent
+    * Lambda functions
+    * Higher-order functions
+    * Function composition
+    * Partial function application
+
+* Functions are pure
+* Immutable data: no state, no variables
+* Advanced type systems
+
+---
+
+## Languages
+* Haskell: Pure functional, immutable, lazy, advanced types
+* Scala: Functional, object oriented running on JVM
+* Clojure: Modern, concurrent LISP on top of JVM
+* F#: Functional, object oriented on top of CLR
+* Python: lambda, HOFs, map, zip, filter, reduce
+* JavaScript can emulate functional programming with HOFs
+
+---
+
+## Haskell
+* Purely functional language
+* Strongly typed (and no ma, you ain&#39;t seen strong)
+* Lazy by default
+* Elegant syntax
+* Efficient
+* &#34;If it compiles, it works!&#34; (often)
+
+&lt;img src=&#34;/fp/img/compiles_and_works.jpg&#34; style=&#34;width: 50%;&#34;/&gt;
+
+---
+
+## Function composition
+
+&gt; Composition is *the* way to reduce complexity
+
+```{Python}
+    print(sin(float(&#39;2&#39;)))
+    a = f(g(h(x)))
+```
+
+```{sh}
+    $ cat file.txt | sort
+    $ cat file.txt | rev | head -2
+    $ cat file.txt | tr a-z A-Z | sed &#39;s/$/!!!/&#39;
+```
+
+```{Haskell}
+    a x = take 2 . rev . sort $ x
+    a&#39; = take 2 . rev . sort
+```
+
+&gt; This is why we don&#39;t use parens in Haskell
+
+---
+
+## Purity
+* Pure functions has no notion of state: They take input values and return
+  values
+* Given the same input, a pure function *always* returns the same value!
+  Function calls can be optimized away!
+* Pure function == data!
+* Purity is key to equational reasoning
+
+&lt;img src=&#34;/fp/img/bugbarrier.jpg&#34; style=&#34;width: 40%;&#34;/&gt;
+
+---
+
+## Currying
+* Partial application of functions
+* All functions take one or zero arguments and return a function
+
+```{Haskell}
+    add :: Int -&gt; Int -&gt; Int
+    add x y = x + y
+
+    add42 :: Int -&gt; Int
+    add42 = add 42
+
+    mulf2 :: (Int -&gt; Int) -&gt; Int -&gt; Int
+    mulf2 f x = 2 * f x
+
+    main = do
+        print $ mulf2 (add 42) 5
+        print $ mulf2 add42 5
+```
+
+---
+
+## Looping
+* No state -&gt; no loops: Recursion  and tail recursion
+* Loops are hard to understand (but recursion is worse)
+* Loops are not declarative
+* map, filter and fold: Looping with style!
+
+---
+
+## Concurrency
+Concurrency is nearly trivial
+
+```{Haskell}
+import Data.Vector as V
+import Control.Parallel.Strategies
+
+main :: IO ()
+main = do
+    let n = 1000.0
+        a = fromList [1.0..n]
+        b = V.map fun a `using` parTraversable rseq
+    print $ dotp a b
+
+fun :: Float -&gt; Float
+fun x = y + 1.0 / exp y
+    where
+        y = x / sqrt x
+
+dotp :: Vector Float -&gt; Vector Float -&gt; Float
+dotp a b = V.sum (V.zipWith (*) a b `using` parTraversable rseq)
+```
+
+---
+
+## Real life
+&lt;img src=&#34;/fp/img/csharp_vs_fsharp.png&#34; style=&#34;width: 100%;&#34;/&gt;
+
+## Summary of advantages
+* Reduced complexity
+* Easier to reason about code
+* Easier testing
+* Easier parallelism and concurrency
+* Higher level abstractions
+* Less boiler plate, shorter code
+
+&lt;img src=&#34;/fp/img/haskell.png&#34; style=&#34;width: 100%;&#34;/&gt;
+
+---
+
+## Fortran example
+
+```{Fortran}
+program fp
+    implicit none
+    integer :: i
+    real, dimension(:,:), allocatable :: x
+
+    x = qeq(life(5), 4.0, 2.0)
+    print *, x
+contains
+   pure function life(a) result(b)
+      integer, intent(in) :: a
+      real, dimension(:,:), allocatable :: b
+
+      allocate(b(a,a))
+      b = 42.0
+   end function
+   elemental function qeq(a, b, c) result(y)
+      real, intent(in) :: a, b, c
+      real :: y
+
+      y = -b + sqrt(b**2 + 4*a*c)/a/2.0
+   end function
+end program
+```
+
+---
+
+## What can I do?
+* In fortran, write *pure* and *elemental* functions when possible
+* In C++ use shared_ptr and/or smart_ptr
+* Write modular code
+* Don&#39;t write objects when a function will do
+* Write short functions which do one thing and do it well
+* Avoid global variables, including module and object state
+* Keep the IO layer connected and thin
+* Don&#39;t reuse variables
+
+
+    </textarea>
+
+    <script src="/fp/refreeze/js/remark-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="/fp/refreeze/js/high.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+          highlightStyle: 'sunburst',
+          highlightLanguage: 'remark'
+        }) ;
+    </script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-44561333-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>
